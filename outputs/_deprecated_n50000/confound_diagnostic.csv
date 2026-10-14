@@ -1,0 +1,3 @@
+label,granularity,n_samples,n_groups,n_chemistries,samples_per_chemistry,frac_single_topology,H_group,H_group_given_chem,cond_frac,n_shared_pairs,n_pairs_compared
+hmof,coarse,50000,11,1573,31.786,0.753338,1.7717,0.3157,0.178216,2,55
+hmof,fine,50000,11,45135,1.108,0.979661,1.7717,0.0413,0.023316,2,55

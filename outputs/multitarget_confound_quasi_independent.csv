@@ -1,0 +1,11 @@
+﻿quasi_independent_group,targets,n_targets,n_positive,fraction_positive,median_delta_R2,wilcoxon_p_greater
+0,CO2_uptake_P0.15bar_T298K [mmol/g],1,1,1.0,0.3347442835911868,
+1,CO2_uptake_P0.10bar_T363K [mmol/g],1,1,1.0,0.4050039352159259,
+2,CO2_uptake_P0.70bar_T413K [mmol/g],1,1,1.0,0.570741542580834,
+3,excess_CO2_uptake_P0.15bar_T298K [mmol/g],1,1,1.0,0.0014287464491553,
+4,CO2_binary_uptake_P0.15bar_T298K [mmol/g],1,1,1.0,0.3222414212132956,
+5,N2_binary_uptake_P0.85bar_T298K [mmol/g],1,1,1.0,0.3763110829734236,
+6,working_capacity_vacuum_swing [mmol/g],1,1,1.0,0.3250041936363963,
+7,working_capacity_temperature_swing [mmol/g],1,1,1.0,0.2719888895157399,
+8,heat_adsorption_CO2_P0.15bar_T298K [kcal/mol],1,1,1.0,0.1165617951100489,
+9,CO2/N2_selectivity,1,1,1.0,0.0996915415043949,

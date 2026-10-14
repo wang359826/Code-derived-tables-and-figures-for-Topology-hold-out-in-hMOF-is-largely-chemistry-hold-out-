@@ -1,0 +1,7 @@
+stat,n,pearson_r,pearson_p,spearman_rho,spearman_p,x,y
+item3: R2_topology(full) vs R2_topology(geo-only),10,0.975,1.602937221378891e-06,0.976,1.4675461874042197e-06,R2_topology_full,R2_topology_geo
+"item3: same, excluding the excess target",9,0.963,3.116706984032586e-05,0.967,2.155031274835775e-05,R2_topology_full,R2_topology_geo
+item4: split_effect vs R2_topology(geo-only),10,-0.91,0.00026184762543565666,-0.842,0.0022200312259168407,split_effect_full,R2_topology_geo
+"item4: same, excluding the excess target",9,-0.862,0.0027959982337387654,-0.783,0.012519873019449882,split_effect_full,R2_topology_geo
+control: split_effect vs R2_random(geo-only),10,-0.907,0.00029162482162779633,-0.818,0.0038149200825507135,split_effect_full,R2_random_geo
+"control: same, excluding the excess target",9,-0.854,0.0034087786473096034,-0.75,0.019942126131992522,split_effect_full,R2_random_geo

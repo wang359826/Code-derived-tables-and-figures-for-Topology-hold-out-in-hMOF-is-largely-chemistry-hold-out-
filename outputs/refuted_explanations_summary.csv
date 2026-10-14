@@ -1,0 +1,5 @@
+﻿hypothesis,metric,value
+H1 nearest-neighbour distance,share of ΔR² explained,0.25717557765568555
+H2 building-block family overlap,share of ΔR² explained,0.15949425321544639
+"H3 identity attribution (identity share, random)",identity share of |SHAP|,0.8311252360208627
+"H3 identity attribution (identity share, hold-out)",identity share of |SHAP|,0.8262427229917992

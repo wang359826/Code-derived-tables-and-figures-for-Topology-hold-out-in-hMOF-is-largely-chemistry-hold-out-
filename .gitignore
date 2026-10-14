@@ -1,0 +1,68 @@
+# ---------------------------------------------------------------- data
+# Too large to commit; fetch it with the commands in DATA.md (verify MD5!).
+data/*.csv
+data/*.tar.gz
+data/*.tar
+data/*.zip
+data/parts/
+data/arcmof/
+data/cif_*/
+data/*.json
+data/*.html
+data/*.log
+data/*.sh
+data/*.md
+!data/*.md.orig
+
+# ------------------------------------------ scratch outputs, never quote these
+# *_smoke*  : tiny 4,000-row runs used to check code paths
+# *_demo*   : illustration runs
+# _verify/  : throwaway directory used when re-checking reproducibility
+outputs/logs/
+outputs/_verify/
+outputs/*_smoke*.png
+outputs/*_smoke*.csv
+outputs/*_demo*.png
+outputs/*_demo*.csv
+outputs/*_smoke2*
+outputs/*.log
+outputs/*.txt
+!outputs/MD5SUMS.txt
+
+# ------------------------------------------- non-delivery, never for reviewers
+# Withdrawn CGCNN arm scripts and HTML build intermediates (see 00_投稿必读.md:
+# these two directories are excluded from the submission package). Keep them out
+# of any commit so `git add .` cannot push them.
+_non_delivery_archive/
+_build/
+
+# Withdrawn experiments kept only for provenance.
+# cgcnn_*          : deep-learning arm withdrawn 2026-10-09 (target variance
+#                    differed 7.7x between the two test sets)
+# granularity_*   : random-compression granularity alignment, withdrawn
+# cgcnn_graphs_*.pt : graph tensors for the same withdrawn arm
+outputs/cgcnn_*
+outputs/granularity_control.csv
+outputs/*.pt
+
+# --------------------------------------------------------------- python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# ------------------------------------------------------------------- os
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# -------------------------------------------------------------- editors
+.vscode/
+.idea/
+*.swp
+
+# ----------------------------------------- scratch from the 2026-10-14 runs
+_scratch_diag/
+.dsh-cache/
+_piptmp/

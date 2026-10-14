@@ -1,0 +1,23 @@
+﻿granularity,held_out_topology,n_samples,seen,S_g_seen_fraction,unseen_fraction
+coarse(metal+2 linkers),pcu,205361,81957,0.399087460618131,0.6009125393818691
+coarse(metal+2 linkers),nbo,49464,43401,0.877426006792819,0.12257399320718099
+coarse(metal+2 linkers),sra,23962,0,0.0,1.0
+coarse(metal+2 linkers),etb,19682,0,0.0,1.0
+coarse(metal+2 linkers),acs,13655,0,0.0,1.0
+coarse(metal+2 linkers),bcu,8795,0,0.0,1.0
+coarse(metal+2 linkers),pts,1522,0,0.0,1.0
+coarse(metal+2 linkers),fof,1256,0,0.0,1.0
+coarse(metal+2 linkers),tbo,363,40,0.11019283746556474,0.8898071625344353
+coarse(metal+2 linkers),the,352,0,0.0,1.0
+coarse(metal+2 linkers),rht,14,14,1.0,0.0
+fine(+functional groups),pcu,205361,27853,0.1356294525250656,0.8643705474749344
+fine(+functional groups),nbo,49464,22057,0.44592026524340933,0.5540797347565907
+fine(+functional groups),sra,23962,0,0.0,1.0
+fine(+functional groups),etb,19682,0,0.0,1.0
+fine(+functional groups),acs,13655,0,0.0,1.0
+fine(+functional groups),bcu,8795,0,0.0,1.0
+fine(+functional groups),pts,1522,0,0.0,1.0
+fine(+functional groups),fof,1256,0,0.0,1.0
+fine(+functional groups),tbo,363,12,0.03305785123966942,0.9669421487603306
+fine(+functional groups),the,352,0,0.0,1.0
+fine(+functional groups),rht,14,7,0.5,0.5

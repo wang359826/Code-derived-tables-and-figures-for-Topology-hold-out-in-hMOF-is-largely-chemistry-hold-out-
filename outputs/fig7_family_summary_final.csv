@@ -1,0 +1,5 @@
+﻿scheme,family_seen_in_train,n,frac,R2
+random,False,22776,0.91104,0.7014306051642998
+random,True,2224,0.08896,0.7555067441242758
+unseen_topology,False,24296,0.97184,0.3654945303387932
+unseen_topology,True,704,0.02816,0.4197336304056076

@@ -1,0 +1,5 @@
+﻿grouping,n_samples,n_groups,mean_group_size,median_group_size,min_group_size,max_group_size
+topology,100000,11,9090.9,2707.0,5,63447
+metal,100000,7,14285.7,7323.0,2814,34331
+linker_pair,100000,598,167.2,164.0,1,614
+chemistry,100000,1590,62.9,63.0,1,184

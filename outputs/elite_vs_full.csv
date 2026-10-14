@@ -1,0 +1,14 @@
+﻿metric,value,note
+full_qualifying,9588.0,全库 ≥ 2.0 mmol/g 的行数
+elite_rows,8206.0,elite 文件行数
+retained_rows,8206.0,同时出现在全库 qualifying 与 elite 中的行数
+lost_rows,1382.0,全库 qualifying 但不在 elite 中的行数
+retained_mean_uptake,2.5804066774311485,保留行的平均吸附量
+lost_mean_uptake,2.6851534652677276,排除行的平均吸附量
+full_qualifying_mean_uptake,2.5955047229870676,全库 qualifying 的平均吸附量
+n_compositions_multi_topology_elite,131.0,精英子集保留的粗粒度组成中，在全库横跨 >1 个拓扑的个数（§3.12 的 131）
+n_compositions_multi_topology_full_db,410.0,全库粗粒度组成中横跨 >1 个拓扑的个数（§3.2 的 410）
+max_uptake_nbo,1.954461,全库中拓扑 nbo 的最大吸附量
+max_uptake_etb,1.948954,全库中拓扑 etb 的最大吸附量
+max_uptake_rht,0.7759550000000001,全库中拓扑 rht 的最大吸附量
+max_uptake_tbo,2.272555,全库中拓扑 tbo 的最大吸附量
