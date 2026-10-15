@@ -361,7 +361,7 @@ of the baseline run).
 | 4 | controlled-contrast design (four arms) | — (design) | — |
 | 5 | the eight structure-derived descriptors | — (feature list) | — |
 | 6 | the four aggregation rules | — (definition) | — |
-| 7 | random split vs three grouped splits (100,000 samples, 426 features) | level 2, `mof_leakage_benchmark.py --loto --tag final` | `leakage_results_final.csv`, `group_stats_final.csv` |
+| 7 | random split vs three grouped splits (100,000 samples, 426 features) | level 2, `mof_leakage_benchmark.py --loto --tag final`; the 415-feature row also needs `--drop-topology-block --tag notopo100k` | `leakage_results_final.csv`, `group_stats_final.csv`, `leakage_results_notopo100k.csv`, `group_stats_notopo100k.csv` |
 | 8 | confound on the full hMOF database (324,426) | level 1, `full_db_confound.py --tag full` | `confound_full.csv`, `jaccard_full.csv` |
 | 9 | chemistry seen/unseen per held-out topology | level 1, `chemistry_seen.py` | `chemistry_seen_by_topology.csv` (`chemistry_seen.csv` = totals) |
 | 10 | chemical overlap of the 55 topology pairs | level 1, `chemistry_seen.py` | `topology_pair_overlap.csv` |
@@ -379,7 +379,7 @@ of the baseline run).
 | 22 | the two databases at a glance; the same-n comparison | level 4, `sample_size_granularity.py` | `sample_size_granularity.csv` |
 | 23 | per-source confounding across ARC-MOF sub-libraries | level 4, `source_confound_granularity.py` | `source_confound_granularity.csv` |
 | 24 | cross-source spread vs a one-common-rate null | level 4, `source_spread_test.py` | `source_spread_test.csv` |
-| 25 | identity effect under three grouping variables | level 3, `multitarget_confound.py --group-col {metal,linker_pair}` | `multitarget_confound.csv`, `multitarget_confound_metal.csv`, `multitarget_confound_linker_pair.csv` |
+| 25 | identity effect under three grouping variables | level 3, `multitarget_confound.py --group-col {metal,linker_pair}` (topology is the default and writes `multitarget_confound.csv`) | `multitarget_confound.csv`, `multitarget_confound_metal.csv`, `multitarget_confound_linker_pair.csv` |
 | 26 | availability of each identity block under each split | level 3, `chemistry_seen_grouping.py` | `chemistry_seen_grouping.csv` |
 
 SI tables: S1 ← `fig7_nn_curve_final.csv`（level 5, `leakage_mechanism.py`）；
@@ -412,6 +412,7 @@ python scripts/fig_confound_and_control.py
 # ---- level 2: results, aggregation rules, seeds (§3.1 / §3.5 / §3.9)
 python scripts/mof_leakage_benchmark.py --max-rows 100000 --loto --tag final
 python scripts/mof_leakage_benchmark.py --max-rows 100000 --target selectivity --log-target --tag logsel100k
+python scripts/mof_leakage_benchmark.py --max-rows 100000 --drop-topology-block --tag notopo100k   # 415 features; §3.1's 21.5%
 python scripts/plot_main_figure.py --outdir ../outputs
 python scripts/metrics_audit.py
 python scripts/multi_seed_repeat.py --max-rows 25000 --seeds 5 --skip-group --tag uptake25k_fix
@@ -422,6 +423,7 @@ python scripts/screening_utility.py --max-rows 25000
 python scripts/multitarget_confound.py --max-rows 25000 --top-linkers 200 \
        --resid-estimators 60 --outdir ../outputs
 python scripts/fig_multitarget.py
+python scripts/diversity_control.py            # arm (d), composition-matched draw (§3.4)
 
 # ---- grouping sensitivity of the identity effect (§4.2; ~25 min each)
 # topology is the default and writes multitarget_confound.csv; the other two
@@ -453,6 +455,10 @@ python scripts/plot_within_cross.py
 python scripts/figures_and_shap.py --max-rows 25000 --shap-samples 200 --tag final
 python scripts/plot_shap_family.py --csv ../outputs/fig5_shap_family_final.csv \
        --out ../outputs/figS1_shap_family_final.png
+
+# ---- checksum manifest: regenerate it, then verify it (do this LAST)
+python scripts/make_md5sums.py            # re-enumerate outputs/ -> outputs/MD5SUMS.txt
+python scripts/make_md5sums.py --check    # exit 0 only if manifest == archive
 ```
 
 > Why `--max-rows 50000` and not 25,000 in level 1: several reference numbers in

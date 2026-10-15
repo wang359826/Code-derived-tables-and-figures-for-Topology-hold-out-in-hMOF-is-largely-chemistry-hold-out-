@@ -5,6 +5,24 @@
 >
 > ✅ **2026-10-11 第三档后：正文 8 张图（Figure 1–8）+ SI 7 张图（Figure S1–S7）。**
 > 正文首次引用顺序仍为 1 → 8 严格递增；SI 图号按 SI 正文首次引用顺序排列。
+>
+> 🆕 **2026-10-15：15 张图全部按出版尺寸重建（`nature-figure` 技能，Python 后端）。**
+> 文件名与图号映射**未变**，`build_pdf.py` 无需改动。重建内容与质量判定见
+> `FIGURE_QA_PUBLICATION.md`；原图备份在
+> `_backup_figures_20261015_figure_rebuild/`。要点：
+>
+> * 每张图现在按 174 mm（492 pt）栏宽**直接绘制**，正文 7 pt 字到纸面就是
+>   7 pt；旧图经 PDF 构建器缩放后只剩 2.2–4.2 pt。
+> * 彩色语义在全文统一（红 = random split、蓝 = topology hold-out）。旧图
+>   1/2/3/8 与旧图 4/5/S1 的红蓝含义相反，已修正。
+> * 图内**不再内嵌 "Figure N."**：编号只由 `<figcaption>` 给出，消除旧图
+>   内嵌图号与图注不同步的问题。
+> * 矢量件（文字可编辑）在 `figures_pub/*.pdf|svg`；`figures/*.png` 是
+>   600 dpi 栅格件，两者内容一致。PDF 现嵌 600 dpi 栅格件。
+> * **Figure S2 的估计量有变**：由逐样本 SHAP 依赖图改为**中心化偏依赖**。
+>   原因、验证与差异见 `FIGURE_QA_PUBLICATION.md` §6 与 SI §S15 的图注。
+> * 重建过程中查出并修正了两处"数值对、图形错"的缺陷（matplotlib 3.11 不再
+>   广播标量柱宽；误差棒容器跨组连线），详见 `FIGURE_QA_PUBLICATION.md` §9。
 
 ## 一、正文图（8 张，全部齐备）
 

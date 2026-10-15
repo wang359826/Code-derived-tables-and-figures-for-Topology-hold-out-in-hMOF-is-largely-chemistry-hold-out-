@@ -227,6 +227,16 @@ LEVELS: dict[int, list[tuple[str, list[str]]]] = {
          "-> leakage_results_chemistry.csv, loto_per_chemistry.csv",
          ["mof_leakage_benchmark.py", "--max-rows", "100000",
           "--loto", "--tag", "chemistry"]),
+
+        # sec 3.1, the 415-feature control that answers "is the chemistry arm just
+        # information-advantaged because it keeps the topology one-hot block?".
+        # --drop-topology-block removes that block from BOTH splits, leaving 415 of
+        # the 426 features; the abstract's 21.5% comes from this run. Registered
+        # 2026-10-16 (it had been run but was missing from every level).
+        ("[sec 3.1] topology-block-removed control, 415 features "
+         "-> leakage_results_notopo100k.csv, group_stats_notopo100k.csv",
+         ["mof_leakage_benchmark.py", "--max-rows", "100000",
+          "--drop-topology-block", "--tag", "notopo100k"]),
     ],
 
     # ================= L3: practical consequences and 10 targets ===============
@@ -303,6 +313,20 @@ LEVELS: dict[int, list[tuple[str, list[str]]]] = {
          "-> leakage_results_ridge100k.csv",
          ["mof_leakage_benchmark.py", "--max-rows", "100000",
           "--model", "ridge", "--tag", "ridge100k"]),
+
+        # Table 25 rows 2 and 3: the identity effect is grouping-dependent, so the
+        # 2x2 design has to be repeated under each grouping variable. Registered
+        # 2026-10-16 (they had been run but were missing from every level).
+        ("[sec 3.14, Table 25] identity effect with metal-centre grouping "
+         "-> multitarget_confound_metal.csv",
+         ["multitarget_confound.py", "--max-rows", "25000",
+          "--top-linkers", "200", "--resid-estimators", "60",
+          "--outdir", "outputs", "--group-col", "metal"]),
+        ("[sec 3.14, Table 25] identity effect with linker-pair grouping "
+         "-> multitarget_confound_linker_pair.csv",
+         ["multitarget_confound.py", "--max-rows", "25000",
+          "--top-linkers", "200", "--resid-estimators", "60",
+          "--outdir", "outputs", "--group-col", "linker_pair"]),
     ],
 
     # ===================== L4: replication on a second database =================

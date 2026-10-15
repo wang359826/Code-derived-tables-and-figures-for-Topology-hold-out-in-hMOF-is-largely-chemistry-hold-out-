@@ -38,7 +38,8 @@ e84d0d82a56740ae3a50845229d53b0d  427018  fig5_pred_vs_actual_final.png
 2bf22ec650904f09deb9de80685c7b98  243  fig7_family_summary_final.csv
 11b8406050dea1a1d54ead4fe19cb568  1769  fig7_nn_curve_final.csv
 99497d6a9e9d5862246689762234ed99  155261  fig9_screening_utility_chemistry.png
-c1cf8e4a3b14e9b807059e57bf8ef36b  123131  figS1_shap_family_final.png
+c5136fd7df94abbfd6e8a4d62841df5b  135825  figS1_shap_family_final.png
+fbaf610fc8ad9d5021b778c011628e9a  307018  figS2_shap_dependence_final.png
 c6554bab75a1239c9e4e0ca95fedd5a8  96313  figS3_within_vs_cross.png
 e74f1a82fbe1ab5182010caef640e108  196391  figS6_source_confound.png
 4fb68c77e6b16230290a3ed7b08c8583  224865  figS7_sg_curve.png
@@ -72,7 +73,8 @@ d41d8cd98f00b204e9800998ecf8427e  0  logs/L03_rerun.log
 32e12191fc850fd1c18b9062da34c3f8  2193  logs/L04_rerun.log
 263b85611ce78887411931ca19bad529  46  logs/L05_plot_within_cross.log
 263b85611ce78887411931ca19bad529  46  logs/L05_rerun.log
-65d8f62dae26b3a52ab9d8436bd59427  469  logs/L06_figures_and_shap.log
+f5f90001dcdac286b39a4f5418d9210e  1641  logs/L06_figures_and_shap.log
+a82fd979425b9388ff8e209bbd067da6  306  logs/L07_plot_shap_family.log
 d3c035e452492eb33e35e2ec23b5cbad  902  logs/L2_conf.log
 faa6f214634ce5d3f9324c04f085a3ae  24  logs/L2_fg.log
 19b827f337febd07ac50574e72323a56  67  logs/L2_ps.log
@@ -82,8 +84,9 @@ faa6f214634ce5d3f9324c04f085a3ae  24  logs/L2_fg.log
 e4820761f576faec60c246c67baac631  2274  logs/L4_retry.log
 d41d8cd98f00b204e9800998ecf8427e  0  logs/L5_rerun.log
 98382ea7a230f7a65ccea7d26d7aa591  28398  logs/L6_conf.log
-b993e015731f338d29e14646b1603abf  592  logs/L6_retry.log
+ed834cbe6ca670d0820879926733c944  1763  logs/L6_retry.log
 b1c96e7e48d7592baf2fa1e397081a8b  330  logs/L7_conf.log
+bdab264dfefd16ee5cb1761c4ad76ce5  438  logs/L7_retry.log
 650bcc7ba4b5f7fab0a73c837e9eccdf  3044  logs/S11_screening_seed143.log
 edfd057c6248488326f82deb568c65c3  3044  logs/S11_screening_seed244.log
 7867cb735765df714b9a3a9bfbf3af16  3044  logs/S11_screening_seed345.log
@@ -108,6 +111,8 @@ c2a039bc4a4e4874e2732d61b3f84d7c  109  null_elite_permutation_composition.csv
 7c8f691463616816b0066227cea9bbe9  155  null_elite_permutation_row.csv
 1b80a56986a604c7369280ca4bcefd28  1007  null_topology_cardinality.csv
 43e43c5768dfdb5b3e7dbe4cb887b435  463  omitted_variable_final.csv
+cb7d0b0236b4ceaf640ce1f015724522  20571  pdp_geometry_curves.csv
+74da85736a740631e929db65ba1f326d  540  pdp_geometry_meta.csv
 39369a10cf2a0a069b57f6bb66add2fa  377  refuted_explanations_summary.csv
 39369a10cf2a0a069b57f6bb66add2fa  377  refuted_explanations_summary_shap_rerun20261014.csv
 6f5e661c503c42d83bed8510c54fd3c3  1123  s_g_curve.csv

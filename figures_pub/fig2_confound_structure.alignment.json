@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "auditable": false,
+  "verdict": "NOT AUDITABLE",
+  "summary": {
+    "fail": 0,
+    "warn": 0,
+    "comparisons": 0,
+    "exemptions": 0
+  },
+  "errors": [
+    "exemption 1 must reference known panels"
+  ],
+  "findings": []
+}

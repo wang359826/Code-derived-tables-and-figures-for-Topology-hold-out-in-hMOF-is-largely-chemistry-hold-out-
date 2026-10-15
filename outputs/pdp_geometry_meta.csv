@@ -1,0 +1,15 @@
+﻿key,value
+target,CO2_uptake_P0.15bar_T298K [mmol/g]
+raw_table,all_MOFs_screening_data.csv
+max_rows,25000
+random_state,42
+n_rows_modelled,25000
+n_features,426
+n_estimators,120
+method,centred partial dependence (marginal expectation over the empirical background); NOT per-sample SHAP
+n_bins,24
+background_n,4000
+in_sample_r2,0.960472
+baseline_mean_of_tree_means,0.519562
+top4_by_pdp_range,void_fraction; largest_included_sphere_diameter [A]; volume [A^3]; void_volume [cm^3/g]
+pdp_range_top4,0.7692; 0.3669; 0.2192; 0.2182
