@@ -1,0 +1,9 @@
+
+===== attempt 1 =====
+已保存: outputs/figS1_shap_family_final.png
+
+数值：
+  structure-derived descriptors random  82.3%   topology  85.1%
+  functional_groups        random   4.8%   topology   4.4%
+  metal_linker             random   5.6%   topology   4.4%
+  topology                 random   7.2%   topology   6.1%

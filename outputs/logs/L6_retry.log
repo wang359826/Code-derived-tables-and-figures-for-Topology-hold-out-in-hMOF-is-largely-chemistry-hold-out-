@@ -1,0 +1,37 @@
+
+
+===== attempt 1 : figures_and_shap.py --max-rows 25000 --shap-samples 200 --tag final =====
+C:\Users\汪星人\Desktop\MOF_topholdout_投稿包_v5修订\03_投稿专用包\03_reproduction_package\scripts\figures_and_shap.py:197: UserWarning: Glyph 8322 (\N{SUBSCRIPT TWO}) missing from font(s) Microsoft YaHei.
+  fig.tight_layout()
+C:\Users\汪星人\Desktop\MOF_topholdout_投稿包_v5修订\03_投稿专用包\03_reproduction_package\scripts\figures_and_shap.py:198: UserWarning: Glyph 8322 (\N{SUBSCRIPT TWO}) missing from font(s) Microsoft YaHei.
+  fig.savefig(outpath, dpi=200)
+========================================================================
+Figure 4 / 5 / 6：预测散点 + SHAP 归因分析
+========================================================================
+原始数据: 324426 行
+随机采样 25000 行
+建模样本 25000 行，426 个特征
+拓扑: 11 种  金属: 7 种
+
+[1/3] Figure 5：收集两种划分下的预测值 ...
+已保存: outputs\fig5_pred_vs_actual_final.png
+已保存: outputs\fig4_predictions_final.csv   耗时 141 s
+
+[2/3] Figure S1：SHAP 归因按特征族聚合 ...
+  随机划分完成（827 s）
+  留一拓扑完成（1260 s）
+
+  特征族归因对比（Table S1）：
+                       family  frac_random  frac_topology
+            functional_groups     0.048235       0.043848
+                 metal_linker     0.056491       0.043714
+structure-derived descriptors     0.823329       0.851354
+                     topology     0.071945       0.061083
+
+已保存: outputs\fig5_shap_family_final.csv
+已保存: outputs\figS1_shap_family_final.png
+
+[3/3] Figure S2：几何描述符 SHAP 依赖图 ...
+已保存: outputs\figS2_shap_dependence_final.png
+
+完成。

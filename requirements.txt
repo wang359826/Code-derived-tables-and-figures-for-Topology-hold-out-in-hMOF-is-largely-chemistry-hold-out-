@@ -11,7 +11,7 @@
 # NOT required, and deliberately absent: torch, torch_geometric, pymatgen.
 # The deep-learning (CGCNN) arm was withdrawn on 2026-10-09 because its two test
 # sets differed 7.7x in target variance, which reversed the direction of the
-# conclusion (manuscript sec. 3.7, withdrawn Table 4). No result depends on it.
+# conclusion (manuscript sec. 3.7; its diagnostic is SI Table S2). No result depends on it.
 
 pandas>=2.0
 numpy>=1.24
@@ -21,4 +21,10 @@ matplotlib>=3.7
 
 # Optional. Needed ONLY for the SHAP attribution in level 5, which is slow and
 # memory-hungry. Levels 1-4 run completely without it.
-shap>=0.42
+#
+# Upper bound is deliberate (added 2026-10-16): refuted_explanations.py and
+# figures_and_shap.py call `TreeExplainer(...).shap_values(X)` and take
+# `np.abs(sv).mean(axis=0)`, i.e. they expect shap_values to return an ndarray.
+# From shap 0.45 that call returns an Explanation object, and the aggregation
+# fails. Pin below 0.45 so the published SHAP numbers stay reproducible.
+shap>=0.42,<0.45

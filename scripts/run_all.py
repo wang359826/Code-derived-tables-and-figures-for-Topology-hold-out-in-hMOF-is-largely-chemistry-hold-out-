@@ -31,9 +31,9 @@ L2/L3 measured 2026-10-13 on a 20-core desktop, 16 GB RAM; both Windows 11)
     python run_all.py --level 2            # 65.4 min  main results, aggregation audit, seeds (Tables 7, 12-14, S3; Figures 1, S5, S7)
     python run_all.py --level 3            # 78.5 min  practical consequences & 10 targets (Tables 16, 18, 19, 25, 26; Figures 6-7)
     python run_all.py --level 4            # 29.9 min  cross-database replication (Tables 20-24; Figures 8, S4, S6)
-    python run_all.py --level 5            # hours*    mechanism analyses + SHAP (Table 15; SI Tables S1-S2, S4-S5; Figures 4-5, S1-S3)
+    python run_all.py --level 5            # ~5.5 h*   mechanism analyses + SHAP (Table 15; SI Tables S1-S2, S4-S5; Figures 4-5, S1-S3)
     python run_all.py --level 1 --dry-run  # print the commands only
-                                           # * not benchmarked; see the breakdown below
+                                           # * level-5 span includes retries; see the breakdown below
 
     Measured breakdown (only for levels actually benchmarked):
         L1 = 7.3 min  : confound_diagnosis 2.1 / seeds 4.8 / elite 0.4 / figures 0.05
@@ -48,7 +48,9 @@ L2/L3 measured 2026-10-13 on a 20-core desktop, 16 GB RAM; both Windows 11)
         L4 = 29.9 min : arcmof_confound 17.0 / exclusivity 1.7 / source_confound 10.4
                         / overlap 0.4 / sample_size 0.4 / figures 0.1
                         (measured 2026-10-10, laptop, 8 GB RAM)
-        L5 : NOT benchmarked end-to-end. Its dominant cost is cardinality_correction.py
+        L5 : run end-to-end on 2026-10-14 (per-step logs in outputs/logs/L01-L07);
+             ~5.5 h session span including retries, so quoted as a span, not a benchmark.
+             Its dominant cost is cardinality_correction.py
              --perm 3, for which the manuscript itself records ~34 min per full pass
              (note to Table 15), i.e. ~1.7 h for the three permutations alone, on top
              of the SHAP run; expect several hours.
@@ -437,8 +439,14 @@ NOTE = {
     3: "Measured 78.5 min (2026-10-13, 20-core desktop; see REPRODUCE.md).",
     4: "Requires the ARC-MOF metadata files listed in DATA.md. Measured 29.9 min "
        "(2026-10-10, laptop, 8 GB RAM).",
-    5: "Several hours; the SHAP step is the slow one and needs a fair amount of memory. "
-       "NOT benchmarked end-to-end.",
+    5: "Level 5 HAS been run end to end (2026-10-14; per-step logs in "
+       "outputs/logs/L01-L07). Its ~5.5 h session span (16:53-22:21) includes "
+       "intermediate retries, so it is quoted as a session record rather than as a "
+       "clean timing benchmark. Its "
+       "dominant cost is cardinality_correction.py --perm 3, for which the manuscript "
+       "itself records ~34 min per full pass (note to Table 15), i.e. ~1.7 h for the "
+       "three permutations alone, on top of the SHAP run; expect several hours on a "
+       "20-core desktop, and considerably longer with n_jobs = 1.",
 }
 
 

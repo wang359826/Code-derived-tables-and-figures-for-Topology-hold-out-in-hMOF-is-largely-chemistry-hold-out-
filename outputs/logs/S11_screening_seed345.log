@@ -1,0 +1,47 @@
+原始数据: 324426 行 x 42 列
+随机采样 25000 行用于建模
+
+样本: n=25000，目标=CO2_uptake_P0.15bar_T298K [mmol/g]
+目标变量: mean=0.5138 sd=0.5274 var=0.2781 min=0.0000 max=5.1523
+注意：本分析在同支持集上比较，**不需要**也不应该跨种群比较 R²。
+
+  [random] out-of-fold 预测完成，n=25000
+
+[random]  R2=0.7041  MAE=0.1591  Spearman=0.8701
+    k= 1.0% (n=  250)  overlap@k=0.5320  enrichment= 53.20x  topk_true=2.6751  oracle=3.2382  regret=0.5632
+    k= 5.0% (n= 1250)  overlap@k=0.5648  enrichment= 11.30x  topk_true=1.8578  oracle=2.2562  regret=0.3984
+    k=10.0% (n= 2500)  overlap@k=0.6692  enrichment=  6.69x  topk_true=1.5704  oracle=1.8086  regret=0.2382
+  [topology] out-of-fold 预测完成，n=25000
+
+[topology]  R2=0.3567  MAE=0.2536  Spearman=0.6472
+    k= 1.0% (n=  250)  overlap@k=0.2880  enrichment= 28.80x  topk_true=1.9941  oracle=3.2382  regret=1.2441
+    k= 5.0% (n= 1250)  overlap@k=0.3664  enrichment=  7.33x  topk_true=1.4400  oracle=2.2562  regret=0.8162
+    k=10.0% (n= 2500)  overlap@k=0.3996  enrichment=  4.00x  topk_true=1.1657  oracle=1.8086  regret=0.6429
+  [linker_pair] out-of-fold 预测完成，n=25000
+
+[linker_pair]  R2=0.6497  MAE=0.1724  Spearman=0.8548
+    k= 1.0% (n=  250)  overlap@k=0.4480  enrichment= 44.80x  topk_true=2.4603  oracle=3.2382  regret=0.7780
+    k= 5.0% (n= 1250)  overlap@k=0.5088  enrichment= 10.18x  topk_true=1.7613  oracle=2.2562  regret=0.4949
+    k=10.0% (n= 2500)  overlap@k=0.6284  enrichment=  6.28x  topk_true=1.5221  oracle=1.8086  regret=0.2865
+  [metal] out-of-fold 预测完成，n=25000
+
+[metal]  R2=0.5552  MAE=0.1995  Spearman=0.7992
+    k= 1.0% (n=  250)  overlap@k=0.3600  enrichment= 36.00x  topk_true=2.1813  oracle=3.2382  regret=1.0569
+    k= 5.0% (n= 1250)  overlap@k=0.4568  enrichment=  9.14x  topk_true=1.6555  oracle=2.2562  regret=0.6007
+    k=10.0% (n= 2500)  overlap@k=0.5784  enrichment=  5.78x  topk_true=1.4515  oracle=1.8086  regret=0.3571
+  [chemistry] out-of-fold 预测完成，n=25000
+
+[chemistry]  R2=0.6658  MAE=0.1692  Spearman=0.8552
+    k= 1.0% (n=  250)  overlap@k=0.4880  enrichment= 48.80x  topk_true=2.5177  oracle=3.2382  regret=0.7205
+    k= 5.0% (n= 1250)  overlap@k=0.5360  enrichment= 10.72x  topk_true=1.8105  oracle=2.2562  regret=0.4458
+    k=10.0% (n= 2500)  overlap@k=0.6456  enrichment=  6.46x  topk_true=1.5450  oracle=1.8086  regret=0.2636
+
+已保存: C:\Users\汪星人\Desktop\MOF_topholdout_投稿包_v5修订\03_投稿专用包\03_reproduction_package\outputs\screening_utility_seed345.csv
+（--no-figure：跳过 fig9 重画）
+
+==========================================================================
+读法
+==========================================================================
+所有指标的分子分母都建立在**同一批样本**上，所以跨策略可直接相减。
+regret@1% 是给从业者的底线答案：按模型排序挑前 1%，
+拿到的材料平均比真正最好的前 1% 差多少 mmol/g。

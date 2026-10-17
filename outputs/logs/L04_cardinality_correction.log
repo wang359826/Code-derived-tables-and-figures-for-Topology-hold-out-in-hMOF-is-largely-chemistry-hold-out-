@@ -1,0 +1,32 @@
+==============================================================================
+Table 15 的基数校正（ω² + 置换零模型）
+样本 N = 25,000；模型与抽样同 omitted_variable.py
+==============================================================================
+
+[1/4] 几何模型的折外残差（用于 η²(residual) / R²(residual)）…
+    几何模型随机划分 R² = 0.6721（期望 0.6721）
+
+[2/4] η² / ω² 与 η² 的置换零…
+  topology     k=  11  η²(tgt)=0.1680 ω²=0.1677  η²(res)=0.0309 ω²=0.0305  E[η²|null]=0.00040 (perm mean 0.00040 / 0.00040)
+  metal_linker k=   7  η²(tgt)=0.1155 ω²=0.1152  η²(res)=0.0071 ω²=0.0069  E[η²|null]=0.00024 (perm mean 0.00024 / 0.00024)
+  linker_pair  k= 587  η²(tgt)=0.3934 ω²=0.3788  η²(res)=0.2548 ω²=0.2369  E[η²|null]=0.02344 (perm mean 0.02343 / 0.02345)
+    ↳ 已落盘 cardinality_correction.csv（ω² 阶段完成）
+
+[3/4] 折外 R² 及其置换零（组标签打乱后重跑同一 5 折 RF）…
+  topology     R²(alone)=+0.1673   R²(resid)=+0.0291   [未做置换零：k=11 太小，基数无可抬]
+    ↳ 已落盘 cardinality_correction.csv（topology 完成）
+  metal_linker R²(alone)=+0.1149   R²(resid)=+0.0059   [未做置换零：k=7 太小，基数无可抬]
+    ↳ 已落盘 cardinality_correction.csv（metal_linker 完成）
+  linker_pair  R²(alone)=+0.3651 (null -0.0315, B=3, 2422s)   R²(resid)=+0.2139 (null -0.0319)
+    ↳ 已落盘 cardinality_correction.csv（linker_pair 完成）
+
+[4/4] 保存 …
+saved: C:\Users\汪星人\Desktop\MOF_topholdout_投稿包_v5修订\03_投稿专用包\03_reproduction_package\scripts\..\outputs\cardinality_correction.csv
+
+==============================================================================
+判读
+==============================================================================
+  topology     k=  11  absorbed: η² 版 81.6%  →  ω² 版 81.8%
+  metal_linker k=   7  absorbed: η² 版 93.8%  →  ω² 版 94.0%
+  linker_pair  k= 587  absorbed: η² 版 35.2%  →  ω² 版 37.5%
+  若 ω² 版与 η² 版同量级，则 §3.8 的 caveat 是保守的、方向不变。

@@ -4,7 +4,7 @@
 §3.6「三个直观解释被否证」的分项占比：一次可核验的重算
 （回应审计清单 P2-4：把 §3.6 从一句结论扩成"关键数 + 强度"）
 
-正文 §3.6 现在写：最近邻距离解释 26%、特征族重叠解释 14%、SHAP 归因在两种
+正文 §3.6 现在写：最近邻距离解释 26%、特征族重叠解释 16%、SHAP 归因在两种
 划分下几乎不变。前两个数字此前由不同的脚本在**不同抽样**上得到，本脚本把
 三个量放在**同一次 25,000 抽样、同一个 5 折随机划分、同一个模型**下重算，
 使它们可以并排引用（并与 §3.1 口径一致：n_estimators = 120）。
@@ -150,7 +150,7 @@ def main() -> None:
     # ---- H3：SHAP 归因（可选，依赖 shap）----
     try:
         import shap
-        shares = {}
+        ident_share = {}
         for scheme in ("random", "leave_one_topology"):
             tr = schemes[scheme][0][0]
             m = RandomForestRegressor(n_estimators=N_EST, random_state=SEED,
@@ -160,16 +160,25 @@ def main() -> None:
             sv = expl.shap_values(X.iloc[tr[:n_sub]])
             imp = np.abs(sv).mean(axis=0)
             names = np.array(X.columns)
-            ident = np.array([not n.startswith(tuple(c + "_" for c in CATS))
-                              for n in names])
-            shares[scheme] = float(imp[~ident].sum() / imp.sum())
-            print(f"\nH3 SHAP: structure-derived share under {scheme}: "
-                  f"{shares[scheme]*100:.1f}%  (identity {100-shares[scheme]*100:.1f}%)")
+            # 2026-10-16 修：原掩码名为 ident，但它 True 时对应的是**结构描述符**
+            # （8 个数值列），于是 imp[~ident] 求出的其实是 identity（类别）份额，
+            # 却被打印成 "structure-derived share"，并把 1-shares 当作
+            # "identity share" 写进 CSV —— 打印与 CSV 的标签都是反的。
+            # 现改名 is_structure 并把标签对正：CSV 从此直接记录 identity 份额。
+            # 注意：2026-10-14 归档的那份 CSV 产生于本次修复之前，它记录的 83.1/82.6
+            # 是**结构描述符**份额，与本脚本今后写出的值互补，二者不可互换引用。
+            is_structure = np.array([not n.startswith(tuple(c + "_" for c in CATS))
+                                     for n in names])
+            ident_share[scheme] = float(imp[~is_structure].sum() / imp.sum())
+            print(f"\nH3 SHAP: identity share under {scheme}: "
+                  f"{ident_share[scheme]*100:.1f}%  "
+                  f"(structure-derived {100-ident_share[scheme]*100:.1f}%)")
         out_rows.append({"hypothesis": "H3 identity attribution (identity share, random)",
-                         "metric": "identity share of |SHAP|", "value": 1 - shares["random"]})
+                         "metric": "identity share of |SHAP|",
+                         "value": ident_share["random"]})
         out_rows.append({"hypothesis": "H3 identity attribution (identity share, hold-out)",
                          "metric": "identity share of |SHAP|",
-                         "value": 1 - shares["leave_one_topology"]})
+                         "value": ident_share["leave_one_topology"]})
     except Exception as exc:  # noqa: BLE001
         print(f"\nH3 skipped (shap unavailable or failed): {exc}")
 

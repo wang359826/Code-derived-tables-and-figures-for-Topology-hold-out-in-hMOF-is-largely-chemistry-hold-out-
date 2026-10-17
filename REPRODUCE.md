@@ -1,9 +1,9 @@
 # Reproduction manual
 
 Everything in this repository exists to let a reader regenerate the results assigned
-to each pipeline level, in one command per level. Level 5 is documented with its
-commands and archived outputs but has not been run end to end in the current
-environment. Nothing here depends on a GPU, on a private data source, or on a specific
+to each pipeline level, in one command per level. All five levels have been run end to
+end — level 5 on 2026-10-14, with its seven per-step logs archived in `outputs/logs/`.
+Nothing here depends on a GPU, on a private data source, or on a specific
 editor.
 
 Companion documents: `README.md` (claims → sections → scripts, English overview),
@@ -77,7 +77,7 @@ Both datasets are public and free, and this work generates **no new data**.
 | **2** | baseline comparison (both targets), four aggregation rules, 5-seed stability, mitigation strategies | **65.4 min** *(measured 2026-10-13; slowest step 34.7 min)* | §3.1, §3.5, §3.9; Tables 7, 12–14, S3; Figures 1, S5, S7 |
 | **3** | screening utility on a shared support set; composition-matched control arm; 10 targets in a 2×2 design; **identity-block availability per split (§4.2)** | **78.5 min** *(measured 2026-10-13; the composition-matched arm trains 120 forests on one core, 45.1 min)* | §3.4, §3.11, §3.13, §3.14, §4.2; Tables 11 (composition-matched panel), 16, 18, 19, 25, 26; Figures 6–7 |
 | **4** | replication on ARC-MOF, leave-one-source-out bound, per-source stratification with a valid spread test, sample-size dependence | **~30 min** *(29.9 min measured for an earlier 6-step form; see below)* | §3.15; Tables 20–24; Figures 8, S4, S6 |
-| **5** | mechanism analyses and SHAP (optional), **plus the one-run recomputation of the three refuted explanations (§3.6)** | several hours *(not benchmarked)* | §3.6, §3.8, §3.10; Table 15; SI Tables S1–S2, S4–S5; Figures 4–5, S1–S3 |
+| **5** | mechanism analyses and SHAP (optional), **plus the one-run recomputation of the three refuted explanations (§3.6)** | **≈5.5 h** *(2026-10-14 session span, retries included; not a clean benchmark — see below)* | §3.6, §3.8, §3.10; Table 15; SI Tables S1–S2, S4–S5; Figures 4–5, S1–S3 |
 
 **Scripts added in revision v6** (each is registered in `run_all.py` at the level
 above, and each supports a specific claim added in this round):
@@ -111,8 +111,10 @@ run by an earlier version of `run_all.py` than the one shipped here:
   been timed separately. Dropping one script and adding two that together cost
   51 s keeps the total at ~30 min.
 
-Level 5 still quotes an estimate because it has never been run end to end; we would
-rather publish an estimate than a number we have not produced. **Levels 2 and 3 are now
+Level 5 **has** been run end to end — on 2026-10-14, with its seven per-step logs archived as
+`outputs/logs/L01`–`L07`. Its seven steps ran within one session spanning **≈5.5 h**
+(16:53 → 22:21 on a 20-core desktop, 16 GB RAM), a span that includes intermediate retries, so we
+quote it as a session record rather than as a clean per-level benchmark. **Levels 2 and 3 are now
 measured** (2026-10-13), and both came out well above the earlier estimates:
 
 | Level | Earlier estimate | **Measured** | Slowest step |
@@ -348,7 +350,7 @@ of the baseline run).
 
 ### Tables
 
-> 本表按**当前主稿编号**重建（2026-10-13）：编号与题注以主稿 §7 的 26 行清单为唯一权威。
+> 本表按**当前主稿编号**重建（2026-10-13）：编号与题注以主稿正文各表的**内联题注**（Table 1–26）为唯一权威。
 > Table 1–6 是描述性表（文献、数据、定义、设计、描述符、聚合口径），没有结果文件；
 > 已撤回的两项（CGCNN 对照、随机压缩粒度对齐）不再占表号，分别在 SI Table S2 与 §4.3
 > 交代。SI 的表格为 Table S1–S9、分节 §S1–S15，见 `02_supplementary/SI.md`。
@@ -449,12 +451,43 @@ python scripts/null_model_controls.py --outdir outputs/_fine          --granular
 python scripts/null_model_controls.py --outdir outputs/common_support --granularity coarse -b 10000 --b-card 1000 --require-cols mc,flig,func
 
 # ---- level 5: mechanism analyses + SHAP (slow, optional)
+# Order and flags match run_all.py --level 5 exactly; this list previously omitted
+# refuted_explanations.py and cardinality_correction.py (fixed 2026-10-16).
 python scripts/leakage_mechanism.py --max-rows 25000 --family --tag final
+python scripts/refuted_explanations.py --max-rows 25000
 python scripts/omitted_variable.py --max-rows 25000 --within-vs-cross --tag final
+python scripts/cardinality_correction.py --max-rows 25000 --perm 3
 python scripts/plot_within_cross.py
 python scripts/figures_and_shap.py --max-rows 25000 --shap-samples 200 --tag final
 python scripts/plot_shap_family.py --csv ../outputs/fig5_shap_family_final.csv \
        --out ../outputs/figS1_shap_family_final.png
+
+# In a sandbox that cannot create named pipes, set n_jobs = 1 for the three
+# scripts that fit a random forest. Fixed random_state makes the fitted values
+# independent of n_jobs, so the numbers are identical:
+#   omitted_variable.py       --n-jobs 1
+#   cardinality_correction.py --n-jobs 1
+#   leakage_mechanism.py      LEAKAGE_MECH_N_JOBS=1  (environment variable)
+#
+# Two of the seven steps -- refuted_explanations.py (step 2) and figures_and_shap.py
+# (step 6) -- additionally require the optional `shap` package. On a host with no
+# outbound network access `pip install shap` cannot complete, and those two steps
+# cannot be re-run to completion; the other five can. The published SHAP numbers are
+# checked in that situation against the archived `outputs/fig5_shap_family_final.csv`
+# (the identity-family share is 17.67% under the random split and 14.86% under the
+# topology hold-out, i.e. the 17.7% / 14.9% quoted in section 3.6), and step 7 still
+# regenerates Figure S1 from that archived CSV without needing shap.
+#
+# Normalisation note, because two scripts print different percentages for the same
+# effect: the "family overlap explains X% of dR2" figure quoted in the manuscript and
+# in SI S1 (16%) comes from refuted_explanations.py, whose denominator is the full
+# random-split R2 minus the hold-out R2. leakage_mechanism.py prints its own version of
+# the same diagnostic (14%) using the family-SEEN subset R2 as the baseline; that subset
+# is only 8.9% of test rows and scores higher than the whole random split (0.7555 vs
+# 0.7062), so its denominator is smaller and the percentage lower. Both prints are
+# internally consistent; the manuscript quotes the refuted_explanations.py convention.
+# Recomputing from leakage_mechanism's own fig7_family_summary_final.csv gives
+# 0.054076 / 0.340747 = 15.9%, i.e. the quoted 16%.
 
 # ---- checksum manifest: regenerate it, then verify it (do this LAST)
 python scripts/make_md5sums.py            # re-enumerate outputs/ -> outputs/MD5SUMS.txt
@@ -543,11 +576,29 @@ These scripts remain in the repository for provenance. They are **not** run by
 
 | Script | Why it is excluded |
 |---|---|
-| `cgcnn_mof.py` | Evidence withdrawn on 2026-10-09: the two test sets differed 7.7× in target variance and the held-out side had *smaller* MAE, so the original conclusion pointed the wrong way (§3.7, withdrawn Table 4). |
-| `granularity_control.py` | The alignment method this paper itself rules out (§4.3 granularity declaration / withdrawn Table 13). `outputs/granularity_control.csv` is kept only to trace the history. |
+| `cgcnn_mof.py` | Evidence withdrawn on 2026-10-09: the two test sets differed 7.7× in target variance and the held-out side had *smaller* MAE, so the original conclusion pointed the wrong way (§3.7; the arm is represented only by its diagnostic, SI Table S2 — it holds no main-text table number). |
+| `granularity_control.py` | The alignment method this paper itself rules out (§4.3 granularity declaration; the withdrawn alignment has **no** table). `outputs/granularity_control.csv` is kept only to trace the history. |
 | `chemistry_topology_factorial.py` | Design 2 is void: 387 of the 388 "multi-topology" compositions span only pcu ↔ nbo, and nbo's target variance is 1/29 of pcu's, so any comparison is meaningless (§3.3). |
 | `source_confound_granularity.py`, v1 and v2 | v1 filtered topologies with a source-size-dependent threshold (DB0 down to 5 topologies, DB6 to 1, where the statistic is trivially 100%); v2 used the withdrawn random-compression alignment. The current file is v3. Do not revert. |
 | `data/fetch_db2.sh`, `data/fix_part6.sh` | Download helpers for a Materials Cloud archive that returned 503 for every record; not needed. |
+
+### One archived model artefact is not redistributed
+
+`figS2_randomforest.joblib` — the fitted random-forest estimator behind the SHAP dependence
+panel of Figure S2 — is **not** in `outputs/` and is **not** listed in `MD5SUMS.txt`. It is a
+model object, not a result: nothing in the manuscript quotes a number read out of it, and
+every figure that depends on it is regenerated from an archived CSV. Rebuild it with
+
+```
+python scripts/figures_and_shap.py --max-rows 25000 --shap-samples 200 --tag final
+```
+
+(the same command that produces `figS2_shap_dependence.png` and
+`fig5_shap_family_final.csv`; `--shap-samples 200` is the value used for the published
+figures). Level 5 is otherwise reproduced as documented above; this artefact is excluded
+only because it is ~272 MB, not because any step is withheld. An earlier manifest listed
+the file with a checksum, which made `make_md5sums.py --check` fail on a file that was
+never shipped; the regenerated manifest no longer carries that entry.
 
 ---
 

@@ -1,0 +1,19 @@
+
+===== attempt 1 =====
+建模样本 25000  特征 426
+
+R²(random) = 0.7066   R²(leave-one-topology) = 0.3676   ΔR² = 0.3390
+
+H1 nearest-neighbour distance
+   median NN distance: random 0.1427  vs leave-one-topology 0.2831
+   random-split R² restricted to distance >= topology median: 0.6194
+   → distance explains 26% of ΔR²
+
+H2 building-block family (metal+linkers+functional_groups, no topology)
+   random               family seen: 0.089 of samples   R²(seen) = 0.7555   R²(unseen) = 0.7014
+   leave_one_topology   family seen: 0.028 of samples   R²(seen) = 0.4197   R²(unseen) = 0.3655
+   → family-seen status explains 16% of ΔR²
+
+H3 skipped (shap unavailable or failed): No module named 'shap'
+
+已保存: C:\Users\汪星人\Desktop\MOF_topholdout_投稿包_v5修订\03_投稿专用包\03_reproduction_package\scripts\..\outputs\refuted_explanations_summary.csv

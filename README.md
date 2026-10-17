@@ -10,8 +10,9 @@ Reproduction package for the manuscript
 > measure**
 
 Everything here is written for a reader who wants to check the claims, not take
-them on trust: one command per level regenerates the results assigned to that level;
-level 5 is explicitly marked as not run end to end in the current environment.
+them on trust: one command per level regenerates the results assigned to that level.
+All five levels have been run end to end — level 5 on 2026-10-14, with a per-step log
+archived for every step in `outputs/logs/`.
 
 | Document | Purpose |
 |---|---|
@@ -168,8 +169,9 @@ python run_all.py --level 1        # 7.3 min   core evidence: claims 1, 2, 5
 python run_all.py --level 2        # 65.4 min  baselines, aggregation rules, seeds
 python run_all.py --level 3        # 78.5 min  practical consequences, 10 targets
 python run_all.py --level 4        # 29.9 min  cross-database replication, claims 7, 8
-python run_all.py --level 5        # hours*    mechanism analyses + SHAP
-# * levels 1-4 measured (see REPRODUCE.md section 3); level 5 is not benchmarked
+python run_all.py --level 5        # ≈5.5 h*   mechanism analyses + SHAP
+# * level 5's ≈5.5 h is a session span (2026-10-14, 16:53-22:21, retries included), not a clean
+#   benchmark; levels 1-4 are measured (see REPRODUCE.md section 3)
 python run_all.py --level 4 --dry-run     # print the commands without running them
 ```
 
@@ -199,8 +201,9 @@ so read them as approximations rather than as measurements of the scripts shippe
 today: level 1 was timed without `full_db_confound.py` (later timed separately at
 14 s), and level 4 without `arcmof_overlap.py` and `sample_size_granularity.py`
 (12 s and 39 s), while still containing the since-withdrawn `granularity_control.py`.
-What each run actually covered is listed in `REPRODUCE.md` §3, which is also why
-levels 2, 3 and 5 are labelled estimates. All seeds are fixed (42 by default).
+What each run actually covered is listed in `REPRODUCE.md` §3; levels 2 and 3 are now
+measured, and level 5 has also been run end to end (2026-10-14) with its ≈5.5 h session
+span quoted as a span rather than a benchmark. All seeds are fixed (42 by default).
 
 **What has actually been verified, not merely intended:** on 2026-10-10, level 4
 (in the 6-step form described above) was re-run from scratch and produced 8/8

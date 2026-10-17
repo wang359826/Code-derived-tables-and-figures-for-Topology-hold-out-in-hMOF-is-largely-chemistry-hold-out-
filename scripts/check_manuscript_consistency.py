@@ -95,7 +95,7 @@ def main():
 
     # 3) 图：题注连续 + 首次引用顺序
     i6 = next(k for k, l in enumerate(lines) if l.startswith("## 6. Figure captions"))
-    i7 = next(k for k, l in enumerate(lines) if l.startswith("## 7. Table captions"))
+    i7 = next(k for k, l in enumerate(lines) if l.startswith("## 7. Source data"))
     caps = [int(m.group(1)) for m in
             (re.match(r"^\*\*Figure (\d+)\.\*\*", l) for l in lines[i6:i7]) if m]
     caps_ok = caps == list(range(1, len(caps) + 1))
@@ -110,16 +110,12 @@ def main():
     w(f"[3] 图题注 1..{len(caps)} 连续  : {'OK' if caps_ok else '❌ ' + str(caps)}")
     w(f"    正文首次引用顺序   : {'OK 严格递增' if order_ok else '❌ ' + ' '.join(map(str, order))}")
 
-    # 4) 表：题注连续 + §7 行数
+    # 4) 表：题注连续（题注已内联于各表上方，§7 不再设清单）
     tabs = [int(m.group(1)) for m in
             (re.match(r"^\*\*Table (\d+)\.\*\*", l) for l in lines[:i7]) if m]
-    i8 = next(k for k, l in enumerate(lines) if l.startswith("## 8. References"))
-    s7rows = [l for l in lines[i7:i8] if re.match(r"^\| \*\*Table \d+\*\*", l)]
     tabs_ok = tabs == list(range(1, len(tabs) + 1))
-    s7_ok = len(s7rows) == len(tabs)
-    ok &= tabs_ok and s7_ok
+    ok &= tabs_ok
     w(f"[4] 正文表题注 1..{len(tabs)} 连续: {'OK' if tabs_ok else '❌ ' + str(tabs)}")
-    w(f"    §7 清单行数        : {len(s7rows)}  {'OK' if s7_ok else '❌ 与题注数不符'}")
 
     # 5) 图件文件与题注一一对应
     files = sorted(os.listdir(FIGDIR)) if os.path.isdir(FIGDIR) else []
@@ -220,7 +216,7 @@ def main():
         pre = k.split(".")[0]
         b = {"1": "§1 Introduction", "2": "§2 Methods", "3": "§3 Results",
              "4": "§4 Discussion", "5": "§5 Conclusion", "6": "§6 Figure captions",
-             "7": "§7 Table captions", "8": "§8 References"}.get(pre, "§9 Declarations")
+             "7": "§7 Source data", "8": "§8 References"}.get(pre, "§9 Declarations")
         blocks[b] = blocks.get(b, 0) + v
     body = sum(v for k, v in blocks.items() if k[:2] in ("§1", "§2", "§3", "§4", "§5"))
     total = len(re.findall(r"\S+", en))

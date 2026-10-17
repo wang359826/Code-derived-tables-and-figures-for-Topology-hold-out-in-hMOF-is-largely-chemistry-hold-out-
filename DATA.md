@@ -250,5 +250,5 @@ DB0, DB5, DB1, DB6, DB7, DB13, DB12, DB15.
 
 Data licences are those stated on the Materials Cloud record and the Zenodo
 record pages respectively. The MIT licence of this repository covers the code
-only, never the datasets. Results assigned to level 5 are archived for inspection, but level 5
-has not been run end to end in the current environment.
+only, never the datasets. Results assigned to level 5 are archived for inspection; level 5
+has also been run end to end (2026-10-14, per-step logs in `outputs/logs/`).

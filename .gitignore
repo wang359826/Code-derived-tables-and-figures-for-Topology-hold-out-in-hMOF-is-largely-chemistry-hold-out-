@@ -18,14 +18,19 @@ data/*.md
 # *_smoke*  : tiny 4,000-row runs used to check code paths
 # *_demo*   : illustration runs
 # _verify/  : throwaway directory used when re-checking reproducibility
-outputs/logs/
+#
+# NOTE (2026-10-17): `outputs/logs/` is deliberately NOT excluded any more.
+# The per-step level-5 logs (L01-L07) are cited as archived evidence in the
+# manuscript (sec. 9; SI S10 and S11), and they are listed in outputs/MD5SUMS.txt.
+# Excluding them made the published archive unable to satisfy its own manifest:
+# a reader cloning the repo and running `make_md5sums.py --check` would see 28
+# listed-but-missing files. The whole directory is ~70 KB, so it ships.
 outputs/_verify/
 outputs/*_smoke*.png
 outputs/*_smoke*.csv
 outputs/*_demo*.png
 outputs/*_demo*.csv
 outputs/*_smoke2*
-outputs/*.log
 outputs/*.txt
 !outputs/MD5SUMS.txt
 

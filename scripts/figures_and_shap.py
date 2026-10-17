@@ -72,6 +72,12 @@ CATEGORICAL_FEATURES = ["functional_groups", "metal_linker", "topology"]
 N_ESTIMATORS = 120
 RANDOM_STATE = 42
 
+# 2026-10-16：默认 n_jobs=-1 在无法创建命名管道的环境（受限沙箱）里会以
+# WinError 5 失败。固定 random_state 下 n_jobs 不改变拟合结果，故允许用
+# 环境变量 FIGSHAP_N_JOBS 覆盖；与 omitted_variable.py / cardinality_correction.py
+# 的 --n-jobs、leakage_mechanism.py 的 LEAKAGE_MECH_N_JOBS 同一约定。
+N_JOBS = int(os.environ.get("FIGSHAP_N_JOBS", "-1"))
+
 # 几何描述符的中文标签（Figure 6 用；图内文字用英文以免字体乱码）
 GEO_LABELS = {
     "volume [A^3]": "volume",
@@ -89,7 +95,7 @@ GEO_LABELS = {
 def _make_model():
     from sklearn.ensemble import RandomForestRegressor
     return RandomForestRegressor(
-        n_estimators=N_ESTIMATORS, random_state=RANDOM_STATE, n_jobs=-1)
+        n_estimators=N_ESTIMATORS, random_state=RANDOM_STATE, n_jobs=N_JOBS)
 
 
 def load_data(csv_path, max_rows):
